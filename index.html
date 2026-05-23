@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>yourschewy</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --cream:   #F5F0E8;
+  --pink:    #E8C4C0;
+  --sage:    #9BAF96;
+  --red:     #8B2020;
+  --black:   #111110;
+  --charcoal:#2A2825;
+  --muted:   #8A8580;
+  --display: 'Bebas Neue', sans-serif;
+  --serif:   'Lora', Georgia, serif;
+  --mono:    'DM Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--black);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.1rem 2.5rem;
+  background: var(--cream);
+  border-bottom: 1.5px solid var(--black);
+  mix-blend-mode: normal;
+}
+.nav-mark {
+  font-family: var(--display);
+  font-size: 1.4rem;
+  letter-spacing: 0.06em;
+  color: var(--black);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 1.8rem; list-style: none; }
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--black); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1.5px solid var(--black);
+  margin-top: 52px;
+}
+.hero-left {
+  background: var(--pink);
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 3rem 3rem 3.5rem;
+  border-right: 1.5px solid var(--black);
+  position: relative;
+  overflow: hidden;
+}
+.hero-left-top {
+  position: absolute; top: 2.5rem; left: 3rem; right: 3rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  display: flex; justify-content: space-between;
+}
+/* Katz-style flat shape in hero */
+.hero-shape {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -60%);
+  width: 200px; height: 280px;
+  background: var(--sage);
+  border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+  opacity: 0.55;
+}
+.hero-shape-sm {
+  position: absolute;
+  top: 30%; right: 2.5rem;
+  width: 70px; height: 70px;
+  background: var(--red);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+.hero-name {
+  font-family: var(--display);
+  font-size: clamp(4.5rem, 9vw, 8rem);
+  line-height: 0.88;
+  letter-spacing: 0.03em;
+  color: var(--black);
+  position: relative; z-index: 1;
+}
+.hero-right {
+  background: var(--cream);
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: 3rem;
+}
+.hero-right-top {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hero-desc {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.55;
+  color: var(--charcoal);
+  max-width: 340px;
+}
+.hero-cta-row {
+  display: flex; flex-direction: column; gap: 0.75rem;
+}
+.hero-cta-link {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--black);
+  text-decoration: none;
+  display: flex; justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--black);
+  padding-top: 0.75rem;
+  transition: color 0.15s;
+}
+.hero-cta-link:hover { color: var(--red); }
+.hero-cta-link span { font-size: 0.9rem; }
+
+/* ── SHARED ── */
+.section-mono {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.big-serif {
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 3.5vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--black);
+}
+.big-serif em { font-style: italic; }
+
+/* ── ABOUT ── */
+#about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1.5px solid var(--black);
+  min-height: 80vh;
+}
+.about-image-panel {
+  background: var(--sage);
+  border-right: 1.5px solid var(--black);
+  position: relative;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 500px;
+}
+/* Katz silhouette-style layered shapes */
+.katz-1 {
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 220px; height: 370px;
+  background: var(--charcoal);
+  border-radius: 50% 50% 0 0 / 35% 35% 0 0;
+}
+.katz-2 {
+  position: absolute;
+  bottom: 240px; left: 50%;
+  transform: translateX(-56%);
+  width: 110px; height: 130px;
+  background: var(--pink);
+  border-radius: 50%;
+}
+.katz-3 {
+  position: absolute;
+  bottom: 300px; left: 50%;
+  transform: translateX(-46%);
+  width: 80px; height: 100px;
+  background: var(--charcoal);
+  border-radius: 50%;
+}
+.about-image-caption {
+  position: absolute; bottom: 1.5rem; left: 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: var(--cream);
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+.about-text-panel {
+  padding: 4rem 3.5rem;
+  display: flex; flex-direction: column; gap: 2rem;
+  justify-content: center;
+}
+.about-body {
+  font-size: 1rem;
+  color: var(--charcoal);
+  line-height: 1.85;
+}
+.about-body em { font-style: italic; color: var(--black); }
+.about-tags {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--black);
+  color: var(--black);
+}
+.tag.filled-red   { background: var(--red);  color: var(--cream); border-color: var(--red); }
+.tag.filled-sage  { background: var(--sage); border-color: var(--sage); }
+.tag.filled-pink  { background: var(--pink); border-color: var(--pink); }
+
+/* ── WORK ── */
+#portfolio {
+  border-bottom: 1.5px solid var(--black);
+}
+.portfolio-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding: 3rem 3rem 2rem;
+  border-bottom: 1px solid var(--black);
+}
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.work-cell {
+  border-right: 1px solid var(--black);
+  border-bottom: 1px solid var(--black);
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+.work-cell:nth-child(3n) { border-right: none; }
+.work-cell:nth-child(n+4):last-child { border-bottom: none; }
+
+.work-cell-thumb {
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+.work-cell:hover .work-cell-thumb { transform: scale(1.03); }
+
+/* Katz-palette flat color fills per cell */
+.work-cell:nth-child(1) .work-cell-thumb { background: var(--pink); }
+.work-cell:nth-child(2) .work-cell-thumb { background: var(--cream); border-bottom: 1px solid var(--black); }
+.work-cell:nth-child(3) .work-cell-thumb { background: var(--charcoal); }
+.work-cell:nth-child(4) .work-cell-thumb { background: var(--sage); }
+.work-cell:nth-child(5) .work-cell-thumb { background: #D4B896; }
+.work-cell:nth-child(6) .work-cell-thumb { background: var(--red); }
+
+.work-placeholder {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: rgba(17,17,16,0.3);
+  text-align: center; padding: 1rem;
+}
+.work-cell:nth-child(3) .work-placeholder,
+.work-cell:nth-child(6) .work-placeholder { color: rgba(245,240,232,0.35); }
+
+/* Hover number label */
+.work-num {
+  position: absolute; top: 1rem; left: 1.25rem;
+  font-family: var(--display);
+  font-size: 3.5rem;
+  color: rgba(17,17,16,0.08);
+  line-height: 1;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.work-cell:nth-child(3) .work-num,
+.work-cell:nth-child(6) .work-num { color: rgba(245,240,232,0.12); }
+
+.work-cell-meta {
+  padding: 1.1rem 1.25rem;
+  border-top: 1px solid var(--black);
+  display: flex; justify-content: space-between; align-items: baseline;
+  background: var(--cream);
+}
+.work-cell-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--black);
+}
+.work-cell-medium {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── COLOR BAND ── */
+.color-band {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  height: 8px;
+  border-bottom: 1.5px solid var(--black);
+}
+.color-band div:nth-child(1) { background: var(--pink); }
+.color-band div:nth-child(2) { background: var(--sage); }
+.color-band div:nth-child(3) { background: var(--red); }
+.color-band div:nth-child(4) { background: var(--charcoal); }
+
+/* ── WRITING ── */
+#blog {
+  border-bottom: 1.5px solid var(--black);
+}
+.blog-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding: 3rem 3rem 2rem;
+  border-bottom: 1px solid var(--black);
+}
+.blog-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.blog-featured {
+  background: var(--red);
+  padding: 3rem;
+  border-right: 1.5px solid var(--black);
+  display: flex; flex-direction: column; justify-content: space-between;
+  min-height: 340px;
+}
+.blog-featured .section-mono { color: rgba(245,240,232,0.6); }
+.blog-featured .big-serif { color: var(--cream); font-size: clamp(1.6rem, 2.8vw, 2.2rem); margin-top: 1rem; }
+.blog-featured-excerpt {
+  font-style: italic;
+  font-size: 0.95rem;
+  color: rgba(245,240,232,0.8);
+  line-height: 1.7;
+  margin-top: 1.5rem;
+}
+.blog-featured-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 2rem;
+}
+.blog-featured-pub {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.55);
+}
+.read-link {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: flex; align-items: center; gap: 0.5rem;
+  transition: gap 0.15s;
+}
+.read-link:hover { gap: 0.9rem; }
+.read-link-light { color: var(--cream); }
+.read-link-dark { color: var(--black); }
+
+.blog-list-col {
+  display: flex; flex-direction: column;
+}
+.blog-entry {
+  padding: 1.75rem 2.5rem;
+  border-bottom: 1px solid var(--black);
+  display: flex; flex-direction: column; gap: 0.5rem;
+  text-decoration: none; color: inherit;
+  transition: background 0.15s;
+}
+.blog-entry:hover { background: var(--pink); }
+.blog-entry:last-child { border-bottom: none; }
+.blog-entry-title {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--black);
+  line-height: 1.3;
+}
+.blog-entry-meta {
+  display: flex; justify-content: space-between;
+}
+
+/* ── CONTACT ── */
+#contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1.5px solid var(--black);
+  min-height: 70vh;
+}
+.contact-left {
+  background: var(--sage);
+  padding: 4rem 3.5rem;
+  border-right: 1.5px solid var(--black);
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.contact-left .big-serif { font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 0.95; margin-top: 1.5rem; }
+.contact-details { display: flex; flex-direction: column; gap: 0; }
+.contact-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(17,17,16,0.2);
+}
+.contact-row:first-child { border-top: 1px solid rgba(17,17,16,0.2); }
+.contact-key {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+}
+.contact-val {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--black);
+}
+.contact-right {
+  padding: 4rem 3.5rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.contact-right .section-mono { margin-bottom: 2.5rem; }
+.form-bare {
+  display: flex; flex-direction: column; gap: 0;
+  flex: 1;
+}
+.form-row-bare {
+  display: flex; flex-direction: column;
+  border-bottom: 1px solid var(--black);
+  padding: 0.75rem 0 1rem;
+}
+.form-row-bare:first-child { border-top: 1px solid var(--black); }
+.flabel {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+.finput, .ftextarea {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--black);
+  background: transparent;
+  border: none; outline: none;
+  resize: none; width: 100%;
+}
+.finput::placeholder, .ftextarea::placeholder { color: rgba(17,17,16,0.25); font-style: italic; }
+.form-submit-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 2rem;
+}
+.form-submit {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cream);
+  background: var(--black);
+  border: none;
+  padding: 0.9rem 2rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.form-submit:hover { background: var(--red); }
+.form-note {
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ── FOOTER ── */
+footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-top: 1.5px solid var(--black);
+}
+.footer-cell {
+  padding: 1.5rem 2rem;
+  border-right: 1px solid var(--black);
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.footer-cell:last-child { border-right: none; }
+.footer-mark {
+  font-family: var(--display);
+  font-size: 1.25rem;
+  letter-spacing: 0.06em;
+  color: var(--black);
+}
+.footer-tagline {
+  font-style: italic;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.footer-links { display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-links a {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-links a:hover { color: var(--black); }
+.footer-copy {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  align-self: flex-end;
+}
+.footer-palette {
+  display: flex; gap: 0.5rem; align-items: center;
+}
+.palette-dot {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 1px solid rgba(17,17,16,0.15);
+}
+
+/* ── FADE IN ── */
+.fi { opacity: 0; transform: translateY(14px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.fi.in { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 800px) {
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+  #hero { grid-template-columns: 1fr; }
+  .hero-left { border-right: none; border-bottom: 1.5px solid var(--black); min-height: 55vw; }
+  #about { grid-template-columns: 1fr; }
+  .about-image-panel { min-height: 320px; border-right: none; border-bottom: 1.5px solid var(--black); }
+  .about-text-panel { padding: 2.5rem 1.5rem; }
+  .work-grid { grid-template-columns: 1fr 1fr; }
+  .work-cell:nth-child(2n) { border-right: none; }
+  .work-cell:nth-child(3n) { border-right: 1px solid var(--black); }
+  .blog-row { grid-template-columns: 1fr; }
+  .blog-featured { border-right: none; border-bottom: 1.5px solid var(--black); }
+  #contact { grid-template-columns: 1fr; }
+  .contact-left { border-right: none; border-bottom: 1.5px solid var(--black); }
+  footer { grid-template-columns: 1fr; }
+  .footer-cell { border-right: none; border-bottom: 1px solid var(--black); }
+  .footer-cell:last-child { border-bottom: none; }
+  .portfolio-header, .blog-header { padding: 2rem 1.5rem 1.5rem; }
+  .contact-left, .contact-right { padding: 2.5rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-mark" href="#hero">YOURSCHEWY</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#blog">Writing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left fi">
+    <div class="hero-left-top">
+      <span>Artist · Editor</span>
+      <span>Est. CA</span>
+    </div>
+    <div class="hero-shape" aria-hidden="true"></div>
+    <div class="hero-shape-sm" aria-hidden="true"></div>
+    <div class="hero-name">YOUR<br>SCHEWY</div>
+  </div>
+  <div class="hero-right fi">
+    <div class="hero-right-top">Sometimes CA, sometimes NYC.</div>
+    <p class="hero-desc">Figurative paintings, graphite drawings, objects at rest — and writing on art, intimacy, and the quiet life of things.</p>
+    <div class="hero-cta-row">
+      <a href="#portfolio" class="hero-cta-link">See my work <span>↓</span></a>
+      <a href="#blog" class="hero-cta-link">Read my writing <span>↓</span></a>
+      <a href="#contact" class="hero-cta-link">Get in touch <span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image-panel fi">
+    <div class="katz-1" aria-hidden="true"></div>
+    <div class="katz-2" aria-hidden="true"></div>
+    <div class="katz-3" aria-hidden="true"></div>
+    <div class="about-image-caption">your photo here</div>
+  </div>
+  <div class="about-text-panel fi">
+    <div class="section-mono">About</div>
+    <div class="big-serif">
+      painter,<br><em>editor,</em><br>sometimes both.
+    </div>
+    <p class="about-body">
+      I make figurative work that lives in the space between <em>sleep and waking</em> — women at rest, bodies in soft collapse, the ordinary afternoon made strange. Graphite, oil, gouache, found paper.
+    </p>
+    <p class="about-body">
+      Off the canvas, I edit at <em>The Adroit Journal</em> and think about how literary work is shaped, contextualized, and read.
+    </p>
+    <div class="about-tags">
+      <span class="tag filled-red">Painting</span>
+      <span class="tag filled-sage">Drawing</span>
+      <span class="tag filled-pink">Readymades</span>
+      <span class="tag">Editorial</span>
+      <span class="tag">Writing</span>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<div class="color-band" aria-hidden="true">
+  <div></div><div></div><div></div><div></div>
+</div>
+<section id="portfolio">
+  <div class="portfolio-header fi">
+    <div>
+      <div class="section-mono">Selected Work</div>
+      <div class="big-serif" style="margin-top:0.4rem"><em>Paintings</em> & drawings</div>
+    </div>
+    <a href="https://instagram.com/yourschewy" class="read-link read-link-dark" style="font-family:var(--mono)">↗ Instagram</a>
+  </div>
+  <div class="work-grid fi">
+    <a class="work-cell" href="#">
+      <div class="work-cell-thumb">
+        <div class="work-num">01</div>
+        <div class="work-placeholder">reclining figure, oil on linen</div>
+      </div>
+      <div class="work-cell-meta">
+        <span class="work-cell-title">she sleeps, still</span>
+        <span class="work-cell-medium">Oil · 2025</span>
+      </div>
+    </a>
+    <a class="work-cell" href="#">
+      <div class="work-cell-thumb">
+        <div class="work-num">02</div>
+        <div class="work-placeholder">figure looking away</div>
+      </div>
+      <div class="work-cell-meta">
+        <span class="work-cell-title">looking away</span>
+        <span class="work-cell-medium">Acrylic · 2025</span>
+      </div>
+    </a>
+    <a class="work-cell" href="#">
+      <div class="work-cell-thumb">
+        <div class="work-num">03</div>
+        <div class="work-placeholder" style="color:rgba(245,240,232,0.35)">graphite portrait</div>
+      </div>
+      <div class="work-cell-meta">
+        <span class="work-cell-title">study no. 12</span>
+        <span class="work-cell-medium">Graphite · 2024</span>
+      </div>
+    </a>
+    <a class="work-cell" href="#">
+      <div class="work-cell-thumb">
+        <div class="work-num">04</div>
+        <div class="work-placeholder">polka dot, from behind</div>
+      </div>
+      <div class="work-cell-meta">
+        <span class="work-cell-title">back of the head (red dots)</span>
+        <span class="work-cell-medium">Gouache · 2024</span>
+      </div>
+    </a>
+    <a class="work-cell" href="#">
+      <div class="work-cell-thumb">
+        <div class="work-num">05</div>
+        <div class="work-placeholder">sand, cigarettes</div>
+      </div>
+      <div class="work-cell-meta">
+        <span class="work-cell-title">untitled (readymade)</span>
+        <span class="work-cell-medium">Found · 2024</span>
+      </div>
+    </a>
+    <a class="work-cell" href="#">
+      <div class="work-cell-thumb">
+        <div class="work-num">06</div>
+        <div class="work-placeholder" style="color:rgba(245,240,232,0.35)">girl with red hat</div>
+      </div>
+      <div class="work-cell-meta">
+        <span class="work-cell-title">little one</span>
+        <span class="work-cell-medium">Watercolor · 2023</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- WRITING -->
+<section id="blog">
+  <div class="blog-header fi">
+    <div>
+      <div class="section-mono">Writing</div>
+      <div class="big-serif" style="margin-top:0.4rem">Essays &amp; <em>criticism</em></div>
+    </div>
+    <a href="https://theadroitjournal.org" class="read-link read-link-dark" style="font-family:var(--mono)">↗ Adroit Journal</a>
+  </div>
+  <div class="blog-row fi">
+    <div class="blog-featured">
+      <div>
+        <div class="section-mono">Featured Essay</div>
+        <div class="big-serif">On resting bodies and the gaze that makes them still</div>
+        <p class="blog-featured-excerpt">What does it mean to paint a sleeping woman, and who is watching?</p>
+      </div>
+      <div class="blog-featured-foot">
+        <span class="blog-featured-pub">The Adroit Journal · May 2025</span>
+        <a href="#" class="read-link read-link-light">Read ↗</a>
+      </div>
+    </div>
+    <div class="blog-list-col">
+      <a class="blog-entry" href="#">
+        <div class="blog-entry-meta">
+          <span class="section-mono">Criticism</span>
+          <span class="section-mono">Feb 2025</span>
+        </div>
+        <div class="blog-entry-title">Yayoi Kusama and the polka dot as compulsion</div>
+      </a>
+      <a class="blog-entry" href="#">
+        <div class="blog-entry-meta">
+          <span class="section-mono">Review</span>
+          <span class="section-mono">Nov 2024</span>
+        </div>
+        <div class="blog-entry-title">What readymades know that paintings don't</div>
+      </a>
+      <a class="blog-entry" href="#">
+        <div class="blog-entry-meta">
+          <span class="section-mono">Essay</span>
+          <span class="section-mono">Aug 2024</span>
+        </div>
+        <div class="blog-entry-title">The slipper, the sandal, the shoe left at the door</div>
+      </a>
+      <a class="blog-entry" href="#">
+        <div class="blog-entry-meta">
+          <span class="section-mono">Interview</span>
+          <span class="section-mono">Apr 2024</span>
+        </div>
+        <div class="blog-entry-title">In conversation: on making work that is also life</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left fi">
+    <div>
+      <div class="section-mono">Contact</div>
+      <div class="big-serif">let's<br><em>talk.</em></div>
+    </div>
+    <div class="contact-details">
+      <div class="contact-row">
+        <span class="contact-key">Email</span>
+        <span class="contact-val">hello@yourschewy.com</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-key">Instagram</span>
+        <span class="contact-val">@yourschewy</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-key">Based</span>
+        <span class="contact-val">CA / NYC</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-key">Open to</span>
+        <span class="contact-val">Commissions, collabs, editorial</span>
+      </div>
+    </div>
+  </div>
+  <div class="contact-right fi">
+    <div class="section-mono">Send a message</div>
+    <div class="form-bare">
+      <div class="form-row-bare">
+        <label class="flabel" for="cn">Name</label>
+        <input class="finput" id="cn" type="text" placeholder="your name">
+      </div>
+      <div class="form-row-bare">
+        <label class="flabel" for="ce">Email</label>
+        <input class="finput" id="ce" type="email" placeholder="your@email.com">
+      </div>
+      <div class="form-row-bare">
+        <label class="flabel" for="cs">What's this about</label>
+        <input class="finput" id="cs" type="text" placeholder="commission, collab, just saying hi…">
+      </div>
+      <div class="form-row-bare" style="flex:1">
+        <label class="flabel" for="cm">Message</label>
+        <textarea class="ftextarea" id="cm" rows="4" placeholder="say anything."></textarea>
+      </div>
+    </div>
+    <div class="form-submit-row">
+      <p class="form-note">I respond within a few days.</p>
+      <button class="form-submit" type="button">Send →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-cell">
+    <div class="footer-mark">YOURSCHEWY</div>
+    <div class="footer-tagline">Sometimes CA, sometimes NYC.</div>
+  </div>
+  <div class="footer-cell">
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#portfolio">Work</a>
+      <a href="#blog">Writing</a>
+      <a href="#contact">Contact</a>
+      <a href="https://instagram.com/yourschewy">Instagram ↗</a>
+      <a href="https://theadroitjournal.org">Adroit Journal ↗</a>
+    </div>
+  </div>
+  <div class="footer-cell">
+    <div class="footer-palette">
+      <div class="palette-dot" style="background:var(--pink)"></div>
+      <div class="palette-dot" style="background:var(--sage)"></div>
+      <div class="palette-dot" style="background:var(--red)"></div>
+      <div class="palette-dot" style="background:var(--charcoal)"></div>
+    </div>
+    <div class="footer-copy">© 2025 yourschewy</div>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 90);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
