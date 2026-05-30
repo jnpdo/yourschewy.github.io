@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Con Gái, Con Đứa — Julia Do</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=DM+Mono:wght@300;400&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --paper:    #E8DFC8;
+  --paper2:   #D9CDB0;
+  --paper3:   #C8BA98;
+  --ink:      #1A1610;
+  --ink-fade: #3D3628;
+  --sepia:    #8B6914;
+  --rust:     #7A2E0E;
+  --sage:     #4A5E3A;
+  --faded:    #9A8E78;
+  --blush:    #C9A090;
+  --blush-bg: rgba(201,160,144,0.18);
+  --sage-bg:  rgba(74,94,58,0.12);
+  --red-bg:   rgba(122,46,14,0.10);
+  --serif:    'Lora', Georgia, serif;
+  --display:  'Bebas Neue', sans-serif;
+  --mono:     'DM Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--paper2);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  /* Aged newsprint texture via CSS noise */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(26,22,16,0.04) 28px,
+      rgba(26,22,16,0.04) 29px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(139,105,20,0.03) 60px,
+      rgba(139,105,20,0.03) 61px
+    );
+}
+
+/* ── COLLAGE BACKGROUND ── */
+/* Newspaper clipping placeholders tiled behind everything */
+.collage-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.clip {
+  position: absolute;
+  /* Photo-print style: white border like a developed photograph */
+  background: #E0D8C8;
+  border: 8px solid #F2EDE3;
+  border-bottom-width: 24px;
+  box-shadow: 2px 3px 12px rgba(26,22,16,0.18), 0 1px 3px rgba(26,22,16,0.1);
+  overflow: hidden;
+  /* Each clip should have: background-image: url('your-scan.jpg'); background-size: cover; background-position: center; */
+}
+.clip::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: -20px; left: 0; right: 0;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.45rem;
+  letter-spacing: 0.06em;
+  color: rgba(26,22,16,0.35);
+  text-transform: lowercase;
+  font-style: italic;
+}
+/* Halftone texture overlay on each clip */
+.clip::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background-image: radial-gradient(circle, rgba(26,22,16,0.08) 1px, transparent 1px);
+  background-size: 4px 4px;
+  pointer-events: none;
+}
+.clip-lines { display: none; }
+
+/* Clipping positions */
+.clip:nth-child(1)  { width: 220px; height: 310px; top: -20px; left: -30px; transform: rotate(-4deg); }
+.clip:nth-child(2)  { width: 180px; height: 260px; top: 80px; left: 160px; transform: rotate(2.5deg); }
+.clip:nth-child(3)  { width: 240px; height: 200px; top: -10px; right: 140px; transform: rotate(1.5deg); }
+.clip:nth-child(4)  { width: 190px; height: 280px; top: 30px; right: -20px; transform: rotate(-3deg); }
+.clip:nth-child(5)  { width: 200px; height: 220px; bottom: 60px; left: -30px; transform: rotate(3deg); }
+.clip:nth-child(6)  { width: 160px; height: 240px; bottom: 20px; left: 180px; transform: rotate(-1.5deg); }
+.clip:nth-child(7)  { width: 220px; height: 180px; bottom: -10px; right: 200px; transform: rotate(2deg); }
+.clip:nth-child(8)  { width: 180px; height: 260px; bottom: 40px; right: -10px; transform: rotate(-2.5deg); }
+.clip:nth-child(9)  { width: 140px; height: 200px; top: 45%; left: 5%; transform: rotate(4deg) translateY(-50%); }
+.clip:nth-child(10) { width: 150px; height: 190px; top: 40%; right: 3%; transform: rotate(-3.5deg) translateY(-50%); }
+
+/* ── EVERYTHING ON TOP ── */
+.page-wrap {
+  position: relative; z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2rem 5rem;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.85rem 2rem;
+  background: rgba(232,223,200,0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1.5px solid var(--ink);
+}
+.nav-mark {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-fade);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-mark:hover { color: var(--ink); }
+.nav-right {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rust);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-right:hover { color: var(--ink); }
+
+/* ── MASTHEAD ── */
+.masthead {
+  margin-top: 80px;
+  padding: 3rem 0 2rem;
+  border-bottom: 3px double var(--ink);
+  border-top: 3px double var(--ink);
+  text-align: center;
+  position: relative;
+  background: var(--blush-bg);
+}
+.masthead-rule-top {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--blush);
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 1rem; justify-content: center;
+}
+.masthead-rule-top::before,
+.masthead-rule-top::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--blush);
+  max-width: 100px;
+}
+.masthead-dept {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  margin-bottom: 1rem;
+}
+.masthead-title {
+  font-family: var(--display);
+  font-size: clamp(3rem, 9vw, 7rem);
+  line-height: 0.88;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+.masthead-sub {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--ink-fade);
+  margin-bottom: 1.5rem;
+}
+.masthead-byline {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faded);
+  display: flex; justify-content: center; gap: 2rem;
+}
+.masthead-byline span { color: var(--ink-fade); }
+
+/* ── MAIN COLUMNS ── */
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 2px 1fr;
+  gap: 0 2rem;
+  padding: 2.5rem 0;
+  border-bottom: 1.5px solid var(--ink);
+}
+.col-divider {
+  background: var(--ink);
+  opacity: 0.15;
+}
+.col-text {}
+.col-lede {
+  font-family: var(--display);
+  font-size: 1.65rem;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+.col-lede em {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--rust);
+}
+.col-body {
+  font-size: 0.95rem;
+  color: var(--ink-fade);
+  line-height: 1.85;
+  margin-bottom: 1rem;
+}
+.col-body em { font-style: italic; color: var(--ink); }
+.drop-cap::first-letter {
+  font-family: var(--display);
+  font-size: 3.8rem;
+  line-height: 0.75;
+  float: left;
+  margin-right: 0.1em;
+  margin-top: 0.05em;
+  color: var(--rust);
+}
+
+/* ── PULL QUOTE ── */
+.pull-quote {
+  text-align: center;
+  padding: 1.75rem 1rem;
+  border-top: 2px solid var(--blush);
+  border-bottom: 2px solid var(--blush);
+  margin: 2rem 0;
+  background: var(--blush-bg);
+}
+.pull-quote p {
+  font-family: var(--display);
+  font-size: 1.4rem;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+.pull-quote p em {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--rust);
+}
+.pull-quote cite {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faded);
+  margin-top: 0.75rem;
+}
+
+/* ── KEYWORDS BOX ── */
+.keyword-box {
+  border: 1.5px solid var(--ink);
+  border-left: 4px solid var(--sage);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  background: var(--sage-bg);
+}
+.keyword-box-title {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  border-bottom: 1px solid rgba(26,22,16,0.2);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.keyword-row {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+}
+.kw {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-fade);
+  border: 1px solid rgba(26,22,16,0.2);
+  padding: 0.2rem 0.5rem;
+}
+.kw.filled { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.kw.sage   { background: var(--sage); color: var(--paper); border-color: var(--sage); }
+.kw.rust   { background: var(--rust); color: var(--paper); border-color: var(--rust); }
+
+/* ── SOURCES ROW ── */
+.sources-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1.5px solid var(--ink);
+  border-bottom: 3px double var(--ink);
+}
+.source-col {
+  padding: 1.25rem 1rem;
+  border-right: 1px solid rgba(26,22,16,0.2);
+  transition: background 0.2s;
+}
+.source-col:hover { background: var(--blush-bg); }
+.source-col:last-child { border-right: none; }
+.source-col-type {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rust);
+  border-bottom: 1px solid rgba(26,22,16,0.15);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+.source-col-name {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+/* ── IMAGE PLACEHOLDER ── */
+.img-block {
+  background: var(--paper3);
+  border: 1.5px solid var(--ink);
+  aspect-ratio: 3/4;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+.img-block-inner {
+  font-style: italic;
+  font-size: 0.8rem;
+  color: var(--faded);
+  text-align: center;
+  padding: 1rem;
+  line-height: 1.5;
+}
+/* Fake halftone dot texture */
+.img-block::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(26,22,16,0.12) 1px, transparent 1px);
+  background-size: 6px 6px;
+}
+.img-caption {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--faded);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ── ARCHIVE SECTION ── */
+.archive-section {
+  margin-top: 3rem;
+  border: 2px solid var(--ink);
+  position: relative;
+}
+.archive-section::before {
+  content: '❖ LIVING ARCHIVE PROJECT ❖';
+  position: absolute;
+  top: -0.65rem; left: 50%;
+  transform: translateX(-50%);
+  background: var(--paper2);
+  padding: 0 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  white-space: nowrap;
+}
+.archive-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.archive-col {
+  padding: 2.5rem 2rem;
+}
+.archive-col:first-child {
+  border-right: 1px solid rgba(26,22,16,0.2);
+  background: var(--sage-bg);
+}
+.archive-head {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+.archive-head em {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--blush);
+}
+.archive-body {
+  font-size: 0.9rem;
+  color: var(--ink-fade);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+.archive-want {
+  display: flex; flex-direction: column; gap: 0;
+  border-top: 1px solid rgba(26,22,16,0.2);
+}
+.archive-want-item {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-fade);
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(26,22,16,0.1);
+  display: flex; gap: 0.75rem;
+}
+.archive-email-link {
+  display: inline-block;
+  font-family: var(--display);
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  letter-spacing: 0.03em;
+  color: var(--rust);
+  text-decoration: none;
+  border-bottom: 2px solid var(--blush);
+  padding-bottom: 0.15rem;
+  margin-bottom: 2rem;
+  transition: color 0.15s, border-color 0.15s;
+}
+.archive-email-link:hover { color: var(--ink); border-color: var(--ink); }
+.archive-email-prompts {
+  display: flex; flex-direction: column; gap: 0;
+  border-top: 1px solid rgba(26,22,16,0.15);
+}
+.archive-email-prompts .archive-want-item em {
+  font-style: italic;
+  color: var(--ink);
+}
+.archive-contact-block { display: flex; flex-direction: column; }
+.archive-want-item::before { content: '→'; color: var(--sage); flex-shrink: 0; }
+
+/* Form */
+.archive-form-label {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  margin-bottom: 1.25rem;
+  display: block;
+}
+.af {
+  display: flex; flex-direction: column; gap: 0;
+  border: 1.5px solid var(--ink);
+}
+.af-field {
+  display: flex; flex-direction: column;
+  border-bottom: 1px solid rgba(26,22,16,0.2);
+  padding: 0.6rem 0.85rem 0.75rem;
+}
+.af-field:last-child { border-bottom: none; }
+.af-label {
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faded);
+  margin-bottom: 0.2rem;
+}
+.af-input, .af-textarea, .af-select {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--ink);
+  background: transparent;
+  border: none; outline: none;
+  resize: none; width: 100%;
+}
+.af-input::placeholder, .af-textarea::placeholder { color: rgba(26,22,16,0.25); }
+.af-select option { background: var(--paper2); }
+.af-submit-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 1rem;
+  flex-wrap: wrap; gap: 0.75rem;
+}
+.af-note {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.06em;
+  color: var(--faded);
+  line-height: 1.5;
+  max-width: 200px;
+}
+.btn-submit {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-submit:hover { background: var(--blush); color: var(--ink); }
+
+/* ── FOOTER ── */
+footer {
+  margin-top: 3rem;
+  border-top: 3px double var(--ink);
+  padding: 1.5rem 0 0;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-title {
+  font-family: var(--display);
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+.footer-sub {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--faded);
+  margin-top: 0.25rem;
+}
+.footer-links {
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+}
+.footer-links a {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faded);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-links a:hover { color: var(--ink); }
+
+/* ── FADE IN ── */
+.fi { opacity: 0; transform: translateY(10px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fi.in { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  .page-wrap { padding: 0 1rem 4rem; }
+  .columns { grid-template-columns: 1fr; }
+  .col-divider { display: none; }
+  .sources-strip { grid-template-columns: 1fr 1fr; }
+  .archive-inner { grid-template-columns: 1fr; }
+  .archive-col:first-child { border-right: none; border-bottom: 1px solid rgba(26,22,16,0.2); }
+  .collage-bg .clip:nth-child(n+5) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NEWSPAPER COLLAGE BACKGROUND -->
+<!-- Replace each .clip div's background with your real clipping images when ready -->
+<div class="collage-bg" aria-hidden="true">
+  <div class="clip" data-label="phụ nữ tân văn, 1932">
+    <div class="clip-lines">
+      <div class="clip-line"></div><div class="clip-line"></div><div class="clip-line"></div>
+      <div class="clip-line"></div><div class="clip-line"></div><div class="clip-line"></div>
+      <div class="clip-line"></div><div class="clip-line"></div><div class="clip-line"></div>
+    </div>
+  </div>
+  <div class="clip" data-label="đàn bà mới, 1934">
+    <div class="clip-lines">
+      <div class="clip-line"></div><div class="clip-line"></div><div class="clip-line"></div>
+      <div class="clip-line"></div><div class="clip-line"></div><div class="clip-line"></div>
+    </div>
+  </div>
+  <div class="clip" data-label="advertisement, c.1935">
+    <div class="clip-lines">
+      <div class="clip-line"></div><div class="clip-line"></div><div class="clip-line"></div>
+      <div class="clip-line"></div><div class="clip-line"></div>
+    </div>
+  </div>
+  <div class="clip" data-label="satirical cartoon, 1936">
+    <div class="clip-lines">
+      <div class="clip-line"></div><div class="clip-line"></div><div class="clip-line"></div>
+      <div class="clip-line"></div><div class="clip-line"></div><div class="clip-line"></div>
+    </div>
+  </div>
+  <div class="clip" data-label="girls' school, 1930">
+    <div class="clip-lines">
+      <div class="clip-line"></div><div class="clip-line"></div><div class="clip-line"></div>
+      <div class="clip-line"></div>
+    </div>
+  </div>
+  <div class="clip" data-label="fashion column, 1933">
+    <div class="clip-lines">
+      <div class="clip-line"></div><div class="clip-line"></div><div class="clip-line"></div>
+      <div class="clip-line"></div><div class="clip-line"></div>
+    </div>
+  </div>
+  <div class="clip" data-label="op-ed, 1938">
+    <div class="clip-lines">
+      <div class="clip-line"></div><div class="clip-line"></div><div class="clip-line"></div>
+    </div>
+  </div>
+  <div class="clip" data-label="beauty advert, 1931">
+    <div class="clip-lines">
+      <div class="clip-line"></div><div class="clip-line"></div><div class="clip-line"></div>
+      <div class="clip-line"></div><div class="clip-line"></div>
+    </div>
+  </div>
+  <div class="clip" data-label="ngày nay, 1937">
+    <div class="clip-lines">
+      <div class="clip-line"></div><div class="clip-line"></div><div class="clip-line"></div>
+    </div>
+  </div>
+  <div class="clip" data-label="bathing suit editorial, 1935">
+    <div class="clip-lines">
+      <div class="clip-line"></div><div class="clip-line"></div><div class="clip-line"></div>
+      <div class="clip-line"></div>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a class="nav-mark" href="index.html">← yourschewy</a>
+  <a class="nav-right" href="#archive">contribute an image ↓</a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- MASTHEAD -->
+  <div class="masthead fi">
+    <div class="masthead-rule-top">Harvard University · History & Literature · 2025</div>
+    <div class="masthead-dept">Senior Thesis</div>
+    <div class="masthead-title">"Con Gái,<br>Con Đứa!"</div>
+    <div class="masthead-sub">Controversy in the Aesthetics of Vietnam's <em>Gái Mới</em> (1929–1940)</div>
+    <div class="masthead-byline">
+      By <span>Julia Nguyen-Phuong Do</span> &nbsp;·&nbsp; Advised at <span>Harvard University</span> &nbsp;·&nbsp; <span>2025</span>
+    </div>
+  </div>
+
+  <!-- TWO COLUMNS -->
+  <div class="columns fi">
+    <div class="col-text">
+      <div class="col-lede">She was modern. She was beautiful. She was <em>a problem.</em></div>
+      <p class="col-body drop-cap">
+        In interwar Vietnam, a new figure emerged across newspapers, advertisements, and satirical cartoons: the <em>Gái Mới</em> — the "new girl." She wore fitted dresses and bathing suits. She read French novels. She went to school. And she made everyone furious.
+      </p>
+      <p class="col-body">
+        This thesis asks why the body of a young Vietnamese woman became the central arena for debates about modernity, nationalism, and resistance under French colonial rule — and what her image tells us about who got to define "progress" in 1930s Vietnam.
+      </p>
+      <div class="pull-quote">
+        <p>"Why was she such a <em>hot topic</em> across every publication?"</p>
+        <cite>— Julia Do, Harvard Hist. & Lit. Senior Spotlight, 2025</cite>
+      </div>
+      <p class="col-body">
+        Working across women's periodicals, beauty ads, op-eds, and girls' school records, I trace how the <em>Gái Mới</em> was simultaneously mocked by traditionalists, celebrated by reformers, and weaponized by anti-colonial writers — all at once.
+      </p>
+    </div>
+    <div class="col-divider"></div>
+    <div class="col-text">
+      <div class="img-block">
+        <div class="img-block-inner">your clipping<br>here</div>
+      </div>
+      <p class="img-caption">Vietnamese press, c. 1930s — replace with your scanned clipping</p>
+
+      <div style="margin-top: 1.5rem;">
+        <div class="keyword-box">
+          <div class="keyword-box-title">Themes & keywords</div>
+          <div class="keyword-row">
+            <span class="kw filled">Gái Mới</span>
+            <span class="kw rust">Colonial femininity</span>
+            <span class="kw sage">Vietnamese press</span>
+            <span class="kw">Visual culture</span>
+            <span class="kw">Fashion & the body</span>
+            <span class="kw">Anti-colonial resistance</span>
+            <span class="kw">1929–1940</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="col-body">
+        The <em>Gái Mới</em> was not a trend. She was a political argument — her aesthetics inseparable from the shifting socio-political tides of late colonial Vietnam.
+      </p>
+    </div>
+  </div>
+
+  <!-- SOURCES STRIP -->
+  <div class="sources-strip fi">
+    <div class="source-col">
+      <div class="source-col-type">Press</div>
+      <div class="source-col-name">Women's newspapers & periodicals, 1929–40</div>
+    </div>
+    <div class="source-col">
+      <div class="source-col-type">Advertising</div>
+      <div class="source-col-name">Beauty & fashion advertisements</div>
+    </div>
+    <div class="source-col">
+      <div class="source-col-type">Illustration</div>
+      <div class="source-col-name">Satirical cartoons & editorial art</div>
+    </div>
+    <div class="source-col">
+      <div class="source-col-type">Institutional</div>
+      <div class="source-col-name">Girls' school records & op-eds</div>
+    </div>
+  </div>
+
+  <!-- ARCHIVE -->
+  <div class="archive-section fi" id="archive">
+    <div class="archive-inner">
+      <div class="archive-col">
+        <div class="archive-head">Do you have<br>an <em>image?</em></div>
+        <p class="archive-body">
+          This research is ongoing. I'm collecting photographs, clippings, and ephemera related to Vietnamese women's visual culture from the 1920s–50s — from family albums, diaspora collections, anywhere they've survived.
+        </p>
+        <div class="archive-want">
+          <div class="archive-want-item">Family photos of Vietnamese women, 1920s–50s</div>
+          <div class="archive-want-item">Magazine clippings or fashion illustrations</div>
+          <div class="archive-want-item">Newspaper pages — women's columns, cartoons</div>
+          <div class="archive-want-item">School photos, institutional ephemera</div>
+          <div class="archive-want-item">Anything that feels right — I want to see it</div>
+        </div>
+      </div>
+      <div class="archive-col">
+        <span class="archive-form-label">Get in touch</span>
+        <div class="archive-contact-block">
+          <p class="archive-body" style="margin-bottom:1.5rem;">
+            Send your images, questions, or thoughts about the project directly to my email. I respond to everything.
+          </p>
+          <a class="archive-email-link" href="mailto:juliaphuongdo@gmail.com">
+            juliaphuongdo@gmail.com
+          </a>
+          <div class="archive-email-prompts">
+            <div class="archive-want-item">Subject: <em>Archive submission</em> — for images & ephemera</div>
+            <div class="archive-want-item">Subject: <em>Project inquiry</em> — for collabs, questions, press</div>
+            <div class="archive-want-item">Subject: <em>Anything</em> — genuinely</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-title">Con Gái, Con Đứa!</div>
+      <div class="footer-sub">Julia Nguyen-Phuong Do · Harvard University · 2025</div>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">← yourschewy</a>
+      <a href="#archive">Contribute</a>
+      <a href="https://instagram.com/yourschewy">Instagram ↗</a>
+    </div>
+  </footer>
+
+</div><!-- /page-wrap -->
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 80);
+    }
+  });
+}, { threshold: 0.06 });
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
