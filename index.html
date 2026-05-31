@@ -3,869 +3,614 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Julia Nguyen-Phuong Do</title>
+<title>A Visual History — Julia Do</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --cream:   #F5F0E8;
-  --pink:    #E8C4C0;
-  --sage:    #9BAF96;
-  --red:     #8B2020;
-  --black:   #111110;
-  --charcoal:#2A2825;
-  --muted:   #8A8580;
-  --display: 'Bebas Neue', sans-serif;
+  --paper:   #EDE5D0;
+  --paper2:  #E0D5BC;
+  --ink:     #1A1610;
+  --ink-fade:#3D3628;
+  --sepia:   #8B6914;
+  --rust:    #7A2E0E;
+  --sage:    #4A5E3A;
+  --faded:   #9A8E78;
+  --blush:   #C9A090;
+  --blush-bg:rgba(201,160,144,0.15);
+  --sage-bg: rgba(74,94,58,0.10);
   --serif:   'Lora', Georgia, serif;
+  --display: 'Bebas Neue', sans-serif;
   --mono:    'DM Mono', monospace;
 }
 
 html { scroll-behavior: smooth; }
 body {
-  background: var(--cream);
-  color: var(--black);
+  background-color: var(--paper2);
+  color: var(--ink);
   font-family: var(--serif);
-  font-size: 17px;
-  line-height: 1.65;
+  font-size: 16px;
+  line-height: 1.7;
   overflow-x: hidden;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(26,22,16,0.03) 28px, rgba(26,22,16,0.03) 29px);
+}
+
+/* ── PHOTO COLLAGE BG ── */
+.collage-bg {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none; overflow: hidden;
+}
+.clip {
+  position: absolute;
+  background: #D5C9AE;
+  border: 7px solid #F0EAD8;
+  border-bottom-width: 22px;
+  box-shadow: 2px 4px 14px rgba(26,22,16,0.2), 0 1px 3px rgba(26,22,16,0.08);
+  overflow: hidden;
+}
+.clip::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background-image: radial-gradient(circle, rgba(26,22,16,0.07) 1px, transparent 1px);
+  background-size: 5px 5px;
+}
+.clip:nth-child(1)  { width: 210px; height: 290px; top: -15px;  left: -25px;  transform: rotate(-5deg); }
+.clip:nth-child(2)  { width: 170px; height: 250px; top: 60px;   left: 155px;  transform: rotate(3deg);  }
+.clip:nth-child(3)  { width: 230px; height: 190px; top: -5px;   right: 160px; transform: rotate(1.5deg);}
+.clip:nth-child(4)  { width: 185px; height: 270px; top: 20px;   right: -15px; transform: rotate(-3.5deg);}
+.clip:nth-child(5)  { width: 195px; height: 210px; bottom: 50px;left: -20px;  transform: rotate(3.5deg);}
+.clip:nth-child(6)  { width: 155px; height: 230px; bottom: 10px;left: 170px;  transform: rotate(-2deg); }
+.clip:nth-child(7)  { width: 215px; height: 175px; bottom: -5px;right: 190px; transform: rotate(2.5deg);}
+.clip:nth-child(8)  { width: 175px; height: 250px; bottom: 30px;right: -5px;  transform: rotate(-2deg); }
+.clip:nth-child(9)  { width: 135px; height: 190px; top: 42%;    left: 4%;     transform: rotate(4deg) translateY(-50%); }
+.clip:nth-child(10) { width: 145px; height: 185px; top: 38%;    right: 2%;    transform: rotate(-4deg) translateY(-50%); }
+
+/* ── PAGE ── */
+.page {
+  position: relative; z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem 6rem;
 }
 
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 1.1rem 2.5rem;
-  background: var(--cream);
-  border-bottom: 1.5px solid var(--black);
-  mix-blend-mode: normal;
+  padding: 0.85rem 2rem;
+  background: rgba(224,213,188,0.93);
+  backdrop-filter: blur(8px);
+  border-bottom: 1.5px solid var(--ink);
 }
-.nav-mark {
-  font-family: var(--display);
-  font-size: 1.4rem;
-  letter-spacing: 0.06em;
-  color: var(--black);
-  text-decoration: none;
-}
-.nav-links { display: flex; gap: 1.8rem; list-style: none; }
-.nav-links a {
+.nav-back {
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--ink-fade);
   text-decoration: none;
   transition: color 0.15s;
 }
-.nav-links a:hover { color: var(--black); }
+.nav-back:hover { color: var(--ink); }
+.nav-right {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rust);
+  text-decoration: none;
+}
+.nav-right:hover { color: var(--ink); }
 
-/* ── HERO ── */
-#hero {
-  min-height: 100svh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-bottom: 1.5px solid var(--black);
-  margin-top: 52px;
-}
-.hero-left {
-  background: var(--pink);
-  display: flex; flex-direction: column;
-  justify-content: flex-end;
-  padding: 3rem 3rem 3.5rem;
-  border-right: 1.5px solid var(--black);
+/* ── BOOK HEADER ── */
+.book-header {
+  margin-top: 80px;
+  padding: 3.5rem 0 2.5rem;
+  border-bottom: 3px double var(--ink);
+  text-align: center;
+  background: var(--blush-bg);
   position: relative;
-  overflow: hidden;
 }
-.hero-left-top {
-  position: absolute; top: 2.5rem; left: 3rem; right: 3rem;
+.book-header-top {
   font-family: var(--mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.12em;
+  font-size: 0.55rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--charcoal);
-  display: flex; justify-content: space-between;
+  color: var(--blush);
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
 }
-/* Katz-style flat shape in hero */
-.hero-shape {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -60%);
-  width: 200px; height: 280px;
-  background: var(--sage);
-  border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
-  opacity: 0.55;
-}
-.hero-shape-sm {
-  position: absolute;
-  top: 30%; right: 2.5rem;
-  width: 70px; height: 70px;
-  background: var(--red);
-  border-radius: 50%;
-  opacity: 0.7;
-}
-.hero-name {
+.book-header-top::before,
+.book-header-top::after { content: ''; flex: 1; max-width: 80px; height: 1px; background: var(--blush); }
+
+.book-title {
   font-family: var(--display);
-  font-size: clamp(4.5rem, 9vw, 8rem);
-  line-height: 0.88;
-  letter-spacing: 0.03em;
-  color: var(--black);
-  position: relative; z-index: 1;
+  font-size: clamp(2.8rem, 8vw, 6rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  margin-bottom: 1rem;
 }
-.hero-right {
-  background: var(--cream);
-  display: flex; flex-direction: column;
-  justify-content: space-between;
-  padding: 3rem;
-}
-.hero-right-top {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.hero-desc {
+.book-subtitle {
   font-family: var(--serif);
   font-style: italic;
-  font-size: 1.25rem;
-  line-height: 1.55;
-  color: var(--charcoal);
-  max-width: 340px;
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  color: var(--ink-fade);
+  max-width: 500px;
+  margin: 0 auto 1.5rem;
+  line-height: 1.6;
 }
-.hero-cta-row {
-  display: flex; flex-direction: column; gap: 0.75rem;
-}
-.hero-cta-link {
+.book-byline {
   font-family: var(--mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--black);
-  text-decoration: none;
-  display: flex; justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid var(--black);
-  padding-top: 0.75rem;
-  transition: color 0.15s;
-}
-.hero-cta-link:hover { color: var(--red); }
-.hero-cta-link span { font-size: 0.9rem; }
-
-/* ── SHARED ── */
-.section-mono {
-  font-family: var(--mono);
-  font-size: 0.58rem;
+  font-size: 0.55rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--faded);
 }
-.big-serif {
-  font-family: var(--serif);
-  font-size: clamp(1.9rem, 3.5vw, 2.75rem);
-  font-weight: 400;
-  line-height: 1.15;
-  color: var(--black);
-}
-.big-serif em { font-style: italic; }
+.book-byline span { color: var(--sepia); }
 
-/* ── ABOUT ── */
-#about {
+/* ── BOOK INTRO ── */
+.book-intro {
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1.5px solid var(--ink);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-bottom: 1.5px solid var(--black);
-  min-height: 80vh;
+  grid-template-columns: 1fr 2px 1fr;
+  gap: 0 2.5rem;
 }
-.about-image-panel {
-  background: var(--sage);
-  border-right: 1.5px solid var(--black);
-  position: relative;
-  overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-  min-height: 500px;
+.bi-divider { background: rgba(26,22,16,0.12); }
+.bi-col {}
+.bi-lede {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.01em;
 }
-/* Katz silhouette-style layered shapes */
-.katz-1 {
-  position: absolute;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 220px; height: 370px;
-  background: var(--charcoal);
-  border-radius: 50% 50% 0 0 / 35% 35% 0 0;
-}
-.katz-2 {
-  position: absolute;
-  bottom: 240px; left: 50%;
-  transform: translateX(-56%);
-  width: 110px; height: 130px;
-  background: var(--pink);
-  border-radius: 50%;
-}
-.katz-3 {
-  position: absolute;
-  bottom: 300px; left: 50%;
-  transform: translateX(-46%);
-  width: 80px; height: 100px;
-  background: var(--charcoal);
-  border-radius: 50%;
-}
-.about-image-caption {
-  position: absolute; bottom: 1.5rem; left: 1.5rem;
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.1em;
-  color: var(--cream);
-  opacity: 0.7;
-  text-transform: uppercase;
-}
-.about-text-panel {
-  padding: 4rem 3.5rem;
-  display: flex; flex-direction: column; gap: 2rem;
-  justify-content: center;
-}
-.about-body {
-  font-size: 1rem;
-  color: var(--charcoal);
+.bi-lede em { font-family: var(--serif); font-style: italic; color: var(--rust); }
+.bi-body {
+  font-size: 0.95rem;
+  color: var(--ink-fade);
   line-height: 1.85;
 }
-.about-body em { font-style: italic; color: var(--black); }
-.about-tags {
-  display: flex; flex-wrap: wrap; gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-.tag {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.35rem 0.75rem;
-  border: 1px solid var(--black);
-  color: var(--black);
-}
-.tag.filled-red   { background: var(--red);  color: var(--cream); border-color: var(--red); }
-.tag.filled-sage  { background: var(--sage); border-color: var(--sage); }
-.tag.filled-pink  { background: var(--pink); border-color: var(--pink); }
+.bi-body em { font-style: italic; color: var(--ink); }
+.bi-body + .bi-body { margin-top: 0.85rem; }
 
-/* ── WORK ── */
-#portfolio {
-  border-bottom: 1.5px solid var(--black);
+/* ── WHAT WE'RE LOOKING FOR ── */
+.looking-for {
+  padding: 2rem 0;
+  border-bottom: 1.5px solid var(--ink);
 }
-.portfolio-header {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  padding: 3rem 3rem 2rem;
-  border-bottom: 1px solid var(--black);
+.lf-label {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  margin-bottom: 1.25rem;
 }
-.work-grid {
+.lf-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1.5px solid var(--ink);
 }
-.work-cell {
-  border-right: 1px solid var(--black);
-  border-bottom: 1px solid var(--black);
-  text-decoration: none; color: inherit;
-  display: flex; flex-direction: column;
-  overflow: hidden;
-  position: relative;
+.lf-cell {
+  padding: 1.25rem 1rem;
+  border-right: 1px solid rgba(26,22,16,0.2);
 }
-.work-cell:nth-child(3n) { border-right: none; }
-.work-cell:nth-child(n+4):last-child { border-bottom: none; }
-
-.work-cell-thumb {
-  aspect-ratio: 1;
-  display: flex; align-items: center; justify-content: center;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.4s ease;
-}
-.work-cell:hover .work-cell-thumb { transform: scale(1.03); }
-
-/* Katz-palette flat color fills per cell */
-.work-cell:nth-child(1) .work-cell-thumb { background: var(--pink); }
-.work-cell:nth-child(2) .work-cell-thumb { background: var(--cream); border-bottom: 1px solid var(--black); }
-.work-cell:nth-child(3) .work-cell-thumb { background: var(--charcoal); }
-.work-cell:nth-child(4) .work-cell-thumb { background: var(--sage); }
-.work-cell:nth-child(5) .work-cell-thumb { background: #D4B896; }
-.work-cell:nth-child(6) .work-cell-thumb { background: var(--red); }
-
-.work-placeholder {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 0.85rem;
-  color: rgba(17,17,16,0.3);
-  text-align: center; padding: 1rem;
-}
-.work-cell:nth-child(3) .work-placeholder,
-.work-cell:nth-child(6) .work-placeholder { color: rgba(245,240,232,0.35); }
-
-/* Hover number label */
-.work-num {
-  position: absolute; top: 1rem; left: 1.25rem;
-  font-family: var(--display);
-  font-size: 3.5rem;
-  color: rgba(17,17,16,0.08);
+.lf-cell:last-child { border-right: none; }
+.lf-cell:nth-child(n+4) { border-top: 1px solid rgba(26,22,16,0.2); }
+.lf-icon {
+  font-size: 1.2rem;
+  margin-bottom: 0.4rem;
   line-height: 1;
-  transition: opacity 0.3s;
-  pointer-events: none;
 }
-.work-cell:nth-child(3) .work-num,
-.work-cell:nth-child(6) .work-num { color: rgba(245,240,232,0.12); }
-
-.work-cell-meta {
-  padding: 1.1rem 1.25rem;
-  border-top: 1px solid var(--black);
-  display: flex; justify-content: space-between; align-items: baseline;
-  background: var(--cream);
-}
-.work-cell-title {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--black);
-}
-.work-cell-medium {
-  font-family: var(--mono);
-  font-size: 0.55rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* ── COLOR BAND ── */
-.color-band {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  height: 8px;
-  border-bottom: 1.5px solid var(--black);
-}
-.color-band div:nth-child(1) { background: var(--pink); }
-.color-band div:nth-child(2) { background: var(--sage); }
-.color-band div:nth-child(3) { background: var(--red); }
-.color-band div:nth-child(4) { background: var(--charcoal); }
-
-/* ── WRITING ── */
-#blog {
-  border-bottom: 1.5px solid var(--black);
-}
-.blog-header {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  padding: 3rem 3rem 2rem;
-  border-bottom: 1px solid var(--black);
-}
-.blog-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-.blog-featured {
-  background: var(--red);
-  padding: 3rem;
-  border-right: 1.5px solid var(--black);
-  display: flex; flex-direction: column; justify-content: space-between;
-  min-height: 340px;
-}
-.blog-featured .section-mono { color: rgba(245,240,232,0.6); }
-.blog-featured .big-serif { color: var(--cream); font-size: clamp(1.6rem, 2.8vw, 2.2rem); margin-top: 1rem; }
-.blog-featured-excerpt {
-  font-style: italic;
-  font-size: 0.95rem;
-  color: rgba(245,240,232,0.8);
-  line-height: 1.7;
-  margin-top: 1.5rem;
-}
-.blog-featured-foot {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-top: 2rem;
-}
-.blog-featured-pub {
+.lf-name {
   font-family: var(--mono);
   font-size: 0.58rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(245,240,232,0.55);
+  color: var(--rust);
+  margin-bottom: 0.25rem;
 }
-.read-link {
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-decoration: none;
-  display: flex; align-items: center; gap: 0.5rem;
-  transition: gap 0.15s;
-}
-.read-link:hover { gap: 0.9rem; }
-.read-link-light { color: var(--cream); }
-.read-link-dark { color: var(--black); }
-
-.blog-list-col {
-  display: flex; flex-direction: column;
-}
-.blog-entry {
-  padding: 1.75rem 2.5rem;
-  border-bottom: 1px solid var(--black);
-  display: flex; flex-direction: column; gap: 0.5rem;
-  text-decoration: none; color: inherit;
-  transition: background 0.15s;
-}
-.blog-entry:hover { background: var(--pink); }
-.blog-entry:last-child { border-bottom: none; }
-.blog-entry-title {
-  font-family: var(--serif);
-  font-size: 1.05rem;
-  font-weight: 400;
-  color: var(--black);
-  line-height: 1.3;
-}
-.blog-entry-meta {
-  display: flex; justify-content: space-between;
+.lf-desc {
+  font-size: 0.82rem;
+  color: var(--ink-fade);
+  font-style: italic;
+  line-height: 1.55;
 }
 
-/* ── CONTACT ── */
-#contact {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-bottom: 1.5px solid var(--black);
-  min-height: 70vh;
+/* ── CONTRIBUTE CTA ── */
+.contribute {
+  padding: 2.5rem 0 2rem;
+  border-bottom: 3px double var(--ink);
+  text-align: center;
+  background: var(--sage-bg);
 }
-.contact-left {
-  background: var(--sage);
-  padding: 4rem 3.5rem;
-  border-right: 1.5px solid var(--black);
-  display: flex; flex-direction: column; justify-content: space-between;
+.contribute-head {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
 }
-.contact-left .big-serif { font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 0.95; margin-top: 1.5rem; }
-.contact-details { display: flex; flex-direction: column; gap: 0; }
-.contact-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(17,17,16,0.2);
-}
-.contact-row:first-child { border-top: 1px solid rgba(17,17,16,0.2); }
-.contact-key {
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--charcoal);
-}
-.contact-val {
-  font-family: var(--serif);
+.contribute-head em { font-family: var(--serif); font-style: italic; color: var(--blush); }
+.contribute-sub {
   font-style: italic;
   font-size: 0.9rem;
-  color: var(--black);
+  color: var(--ink-fade);
+  margin-bottom: 1.75rem;
+  line-height: 1.7;
 }
-.contact-right {
-  padding: 4rem 3.5rem;
-  display: flex; flex-direction: column; justify-content: space-between;
+.contribute-email {
+  display: inline-block;
+  font-family: var(--display);
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  letter-spacing: 0.04em;
+  color: var(--rust);
+  text-decoration: none;
+  border-bottom: 2px solid var(--blush);
+  padding-bottom: 0.1rem;
+  transition: color 0.15s, border-color 0.15s;
 }
-.contact-right .section-mono { margin-bottom: 2.5rem; }
-.form-bare {
-  display: flex; flex-direction: column; gap: 0;
-  flex: 1;
+.contribute-email:hover { color: var(--ink); border-color: var(--ink); }
+.contribute-prompts {
+  display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+  margin-top: 1.5rem;
 }
-.form-row-bare {
-  display: flex; flex-direction: column;
-  border-bottom: 1px solid var(--black);
-  padding: 0.75rem 0 1rem;
-}
-.form-row-bare:first-child { border-top: 1px solid var(--black); }
-.flabel {
+.contribute-prompt {
   font-family: var(--mono);
   font-size: 0.55rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 0.3rem;
+  color: var(--faded);
+  display: flex; align-items: center; gap: 0.4rem;
 }
-.finput, .ftextarea {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1rem;
-  color: var(--black);
-  background: transparent;
-  border: none; outline: none;
-  resize: none; width: 100%;
+.contribute-prompt::before { content: '→'; color: var(--sage); }
+
+/* ── DIVIDER ── */
+.section-break {
+  text-align: center;
+  padding: 2.5rem 0 1rem;
+  border-bottom: 1px solid rgba(26,22,16,0.15);
+  margin-bottom: 0;
 }
-.finput::placeholder, .ftextarea::placeholder { color: rgba(17,17,16,0.25); font-style: italic; }
-.form-submit-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding-top: 2rem;
-}
-.form-submit {
+.section-break-label {
   font-family: var(--mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--cream);
-  background: var(--black);
-  border: none;
-  padding: 0.9rem 2rem;
-  cursor: pointer;
-  transition: background 0.15s;
+  color: var(--faded);
+  display: inline-flex; align-items: center; gap: 1rem;
 }
-.form-submit:hover { background: var(--red); }
-.form-note {
+.section-break-label::before,
+.section-break-label::after { content: '❖'; color: var(--blush); font-size: 0.5rem; }
+
+/* ── THESIS SECTION ── */
+.thesis-header {
+  padding: 2rem 0 1.5rem;
+  border-bottom: 1px solid rgba(26,22,16,0.15);
+}
+.thesis-dept {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  margin-bottom: 0.6rem;
+}
+.thesis-title {
+  font-family: var(--display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.thesis-sub {
   font-style: italic;
-  font-size: 0.82rem;
-  color: var(--muted);
+  font-size: 0.95rem;
+  color: var(--ink-fade);
+  line-height: 1.6;
+}
+
+.thesis-body {
+  padding: 1.75rem 0;
+  display: grid;
+  grid-template-columns: 1fr 2px 1fr;
+  gap: 0 2.5rem;
+  border-bottom: 1px solid rgba(26,22,16,0.15);
+}
+.tb-divider { background: rgba(26,22,16,0.1); }
+.tb-text {}
+
+.drop-cap::first-letter {
+  font-family: var(--display);
+  font-size: 3.5rem;
+  line-height: 0.75;
+  float: left;
+  margin-right: 0.1em;
+  margin-top: 0.08em;
+  color: var(--rust);
+}
+.tb-body {
+  font-size: 0.93rem;
+  color: var(--ink-fade);
+  line-height: 1.85;
+  margin-bottom: 0.9rem;
+}
+.tb-body em { font-style: italic; color: var(--ink); }
+.pull-quote {
+  text-align: center;
+  padding: 1.25rem 0.75rem;
+  border-top: 2px solid var(--blush);
+  border-bottom: 2px solid var(--blush);
+  background: var(--blush-bg);
+  margin: 1.25rem 0;
+}
+.pull-quote p {
+  font-family: var(--display);
+  font-size: 1.25rem;
+  line-height: 1.15;
+  color: var(--ink);
+}
+.pull-quote p em { font-family: var(--serif); font-style: italic; color: var(--rust); }
+.pull-quote cite {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faded);
+  margin-top: 0.6rem;
+}
+.keyword-box {
+  border: 1px solid rgba(26,22,16,0.2);
+  border-left: 4px solid var(--sage);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  background: var(--sage-bg);
+}
+.keyword-box-title {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  margin-bottom: 0.6rem;
+}
+.kw-row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.kw {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.07em;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid rgba(26,22,16,0.2);
+  color: var(--ink-fade);
+}
+.kw.ink  { background: var(--ink);  color: var(--paper); border-color: var(--ink); }
+.kw.rust { background: var(--rust); color: var(--paper); border-color: var(--rust); }
+.kw.sage { background: var(--sage); color: var(--paper); border-color: var(--sage); }
+
+/* sources strip */
+.sources-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1.5px solid rgba(26,22,16,0.25);
+  margin: 1.75rem 0 0;
+}
+.sc {
+  padding: 1rem;
+  border-right: 1px solid rgba(26,22,16,0.15);
+}
+.sc:last-child { border-right: none; }
+.sc-type {
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 0.35rem;
+}
+.sc-name {
+  font-style: italic;
+  font-size: 0.8rem;
+  color: var(--ink);
+  line-height: 1.3;
 }
 
 /* ── FOOTER ── */
 footer {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  border-top: 1.5px solid var(--black);
+  margin-top: 3rem;
+  border-top: 3px double var(--ink);
+  padding: 1.5rem 0 0;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  flex-wrap: wrap; gap: 1rem;
 }
-.footer-cell {
-  padding: 1.5rem 2rem;
-  border-right: 1px solid var(--black);
-  display: flex; flex-direction: column; justify-content: space-between;
-}
-.footer-cell:last-child { border-right: none; }
-.footer-mark {
-  font-family: var(--display);
-  font-size: 1.25rem;
-  letter-spacing: 0.06em;
-  color: var(--black);
-}
-.footer-tagline {
-  font-style: italic;
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-.footer-links { display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-title { font-family: var(--display); font-size: 1.1rem; letter-spacing: 0.04em; color: var(--ink); }
+.footer-sub { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.1em; color: var(--faded); margin-top: 0.2rem; }
+.footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
 .footer-links a {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.15s;
+  font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--faded); text-decoration: none; transition: color 0.15s;
 }
-.footer-links a:hover { color: var(--black); }
-.footer-copy {
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  align-self: flex-end;
-}
-.footer-palette {
-  display: flex; gap: 0.5rem; align-items: center;
-}
-.palette-dot {
-  width: 16px; height: 16px; border-radius: 50%;
-  border: 1px solid rgba(17,17,16,0.15);
-}
+.footer-links a:hover { color: var(--ink); }
 
 /* ── FADE IN ── */
-.fi { opacity: 0; transform: translateY(14px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.fi { opacity: 0; transform: translateY(10px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .fi.in { opacity: 1; transform: translateY(0); }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 800px) {
-  nav { padding: 1rem 1.25rem; }
-  .nav-links { display: none; }
-  #hero { grid-template-columns: 1fr; }
-  .hero-left { border-right: none; border-bottom: 1.5px solid var(--black); min-height: 55vw; }
-  #about { grid-template-columns: 1fr; }
-  .about-image-panel { min-height: 320px; border-right: none; border-bottom: 1.5px solid var(--black); }
-  .about-text-panel { padding: 2.5rem 1.5rem; }
-  .work-grid { grid-template-columns: 1fr 1fr; }
-  .work-cell:nth-child(2n) { border-right: none; }
-  .work-cell:nth-child(3n) { border-right: 1px solid var(--black); }
-  .blog-row { grid-template-columns: 1fr; }
-  .blog-featured { border-right: none; border-bottom: 1.5px solid var(--black); }
-  #contact { grid-template-columns: 1fr; }
-  .contact-left { border-right: none; border-bottom: 1.5px solid var(--black); }
-  footer { grid-template-columns: 1fr; }
-  .footer-cell { border-right: none; border-bottom: 1px solid var(--black); }
-  .footer-cell:last-child { border-bottom: none; }
-  .portfolio-header, .blog-header { padding: 2rem 1.5rem 1.5rem; }
-  .contact-left, .contact-right { padding: 2.5rem 1.5rem; }
+@media (max-width: 680px) {
+  .page { padding: 0 1rem 4rem; }
+  .book-intro, .thesis-body { grid-template-columns: 1fr; }
+  .bi-divider, .tb-divider { display: none; }
+  .lf-grid { grid-template-columns: 1fr 1fr; }
+  .lf-cell:nth-child(2n) { border-right: none; }
+  .sources-strip { grid-template-columns: 1fr 1fr; }
+  .sc:nth-child(2n) { border-right: none; }
+  .sc:nth-child(n+3) { border-top: 1px solid rgba(26,22,16,0.15); }
+  .contribute-prompts { flex-direction: column; align-items: center; }
+  .collage-bg .clip:nth-child(n+5) { display: none; }
 }
 </style>
 </head>
 <body>
 
+<div class="collage-bg" aria-hidden="true">
+  <div class="clip"></div><div class="clip"></div><div class="clip"></div>
+  <div class="clip"></div><div class="clip"></div><div class="clip"></div>
+  <div class="clip"></div><div class="clip"></div><div class="clip"></div>
+  <div class="clip"></div>
+</div>
+
 <nav>
-  <a class="nav-mark" href="#hero">Julia Nguyen-Phuong Do</a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#portfolio">Work</a></li>
-    <li><a href="thesis.html">Modern Girl</a></li>
-    <li><a href="#blog">Writing</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <a class="nav-back" href="index.html">← yourschewy</a>
+  <a class="nav-right" href="#contribute">contribute an image ↓</a>
 </nav>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-left fi">
-    <div class="hero-left-top">
-      <span>Artist · Editor</span>
-      <span>Est. CA</span>
-    </div>
-    <div class="hero-shape" aria-hidden="true"></div>
-    <div class="hero-shape-sm" aria-hidden="true"></div>
-    <div class="hero-name">YOUR<br>SCHEWY</div>
-  </div>
-  <div class="hero-right fi">
-    <div class="hero-right-top">Sometimes CA, sometimes NYC.</div>
-    <p class="hero-desc">Julia Nguyen-Phuong Do is a writer, artist, and researcher interested in visual culture, history, and contemporary life. She graduated from Harvard University in 2025, where she studied History & Literature and Studio Art. She is a Content Editor at The Adroit Journal.</p>
-    <div class="hero-cta-row">
-      <a href="#portfolio" class="hero-cta-link">See my work <span>↓</span></a>
-      <a href="#blog" class="hero-cta-link">Read my writing <span>↓</span></a>
-      <a href="#contact" class="hero-cta-link">Get in touch <span>→</span></a>
-    </div>
-  </div>
-</section>
+<div class="page">
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="about-image-panel fi">
-    <div class="katz-1" aria-hidden="true"></div>
-    <div class="katz-2" aria-hidden="true"></div>
-    <div class="katz-3" aria-hidden="true"></div>
-    <div class="about-image-caption">your photo here</div>
+  <!-- BOOK HEADER -->
+  <div class="book-header fi">
+    <div class="book-header-top">An ongoing visual history project</div>
+    <div class="book-title">A Visual History<br>of Vietnamese<br>Women</div>
+    <p class="book-subtitle">A crowdsourced archive of photographs, ephemera, and documents — toward a book.</p>
+    <div class="book-byline">Initiated by <span>Julia Nguyen-Phuong Do</span></div>
   </div>
-  <div class="about-text-panel fi">
-    <div class="section-mono">About</div>
-    <div class="big-serif">
-      painter,<br><em>editor,</em><br>sometimes both.
-    </div>
-    <p class="about-body">
-      I make figurative work that lives in the space between <em>sleep and waking</em> — women at rest, bodies in soft collapse, the ordinary afternoon made strange. Graphite, oil, gouache, found paper.
-    </p>
-    <p class="about-body">
-      Off the canvas, I edit at <em>The Adroit Journal</em> and think about how literary work is shaped, contextualized, and read.
-    </p>
-    <div class="about-tags">
-      <span class="tag filled-red">Painting</span>
-      <span class="tag filled-sage">Drawing</span>
-      <span class="tag filled-pink">Readymades</span>
-      <span class="tag">Editorial</span>
-      <span class="tag">Writing</span>
-    </div>
-  </div>
-</section>
 
-<!-- PORTFOLIO -->
-<div class="color-band" aria-hidden="true">
-  <div></div><div></div><div></div><div></div>
-</div>
-<section id="portfolio">
-  <div class="portfolio-header fi">
+  <!-- BOOK INTRO -->
+  <div class="book-intro fi">
+    <div class="bi-col">
+      <div class="bi-lede">Images shape history.<br><em>Who holds them?</em></div>
+      <p class="bi-body">Vietnamese women have always been photographed, illustrated, and written about — in colonial newspapers, family albums, diaspora scrapbooks, girls' school records, and fashion magazines.</p>
+      <p class="bi-body">Most of those images have never been collected in one place. This project is trying to change that.</p>
+    </div>
+    <div class="bi-divider"></div>
+    <div class="bi-col">
+      <p class="bi-body">I'm building toward a visual and cultural history book — a collection of images, documents, and stories that traces how Vietnamese women have been seen, represented, and self-represented from the early 20th century through the diaspora.</p>
+      <p class="bi-body">If you have something — a photograph, a clipping, a document — <em>I want to see it.</em> Every contribution will be credited.</p>
+    </div>
+  </div>
+
+  <!-- WHAT WE'RE LOOKING FOR -->
+  <div class="looking-for fi">
+    <div class="lf-label">What we're looking for</div>
+    <div class="lf-grid">
+      <div class="lf-cell">
+        <div class="lf-icon">📷</div>
+        <div class="lf-name">Photographs</div>
+        <div class="lf-desc">Family portraits, studio shots, candid photos of Vietnamese women from the 1900s–1980s</div>
+      </div>
+      <div class="lf-cell">
+        <div class="lf-icon">📰</div>
+        <div class="lf-name">Press & periodicals</div>
+        <div class="lf-desc">Clippings, magazine pages, advertisements, illustrations, cartoons</div>
+      </div>
+      <div class="lf-cell">
+        <div class="lf-icon">📄</div>
+        <div class="lf-name">Documents</div>
+        <div class="lf-desc">School records, letters, identity papers, institutional ephemera</div>
+      </div>
+      <div class="lf-cell">
+        <div class="lf-icon">🪡</div>
+        <div class="lf-name">Fashion & dress</div>
+        <div class="lf-desc">Images of clothing, fashion columns, beauty advertisements, dress patterns</div>
+      </div>
+      <div class="lf-cell">
+        <div class="lf-icon">🗂</div>
+        <div class="lf-name">Diaspora archives</div>
+        <div class="lf-desc">Materials from Vietnamese communities outside Vietnam — US, France, elsewhere</div>
+      </div>
+      <div class="lf-cell">
+        <div class="lf-icon">✨</div>
+        <div class="lf-name">Anything else</div>
+        <div class="lf-desc">If it feels relevant, send it. I'd rather see too much than miss something</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTRIBUTE -->
+  <div class="contribute fi" id="contribute">
+    <div class="contribute-head">Do you have <em>an image?</em></div>
+    <p class="contribute-sub">Send scans, photos, or questions directly. All contributors will be credited in the final publication.</p>
+    <a class="contribute-email" href="mailto:juliaphuongdo@gmail.com">juliaphuongdo@gmail.com</a>
+    <div class="contribute-prompts">
+      <span class="contribute-prompt">Archive submission</span>
+      <span class="contribute-prompt">Project inquiry</span>
+      <span class="contribute-prompt">Press & collaboration</span>
+    </div>
+  </div>
+
+  <!-- SECTION BREAK -->
+  <div class="section-break fi">
+    <span class="section-break-label">About the thesis behind this project</span>
+  </div>
+
+  <!-- THESIS -->
+  <div class="thesis-header fi">
+    <div class="thesis-dept">Harvard University · History & Literature · 2025</div>
+    <div class="thesis-title">"Con Gái, Con Đứa!"</div>
+    <p class="thesis-sub">Controversy in the Aesthetics of Vietnam's <em>Gái Mới</em> (1929–1940)</p>
+  </div>
+
+  <div class="thesis-body fi">
+    <div class="tb-text">
+      <p class="tb-body drop-cap">In interwar Vietnam, a new figure emerged across newspapers, advertisements, and satirical cartoons: the <em>Gái Mới</em> — the "new girl." She wore fitted dresses. She went to school. She was modern, and she made everyone furious.</p>
+      <p class="tb-body">This thesis asks why the body of a young Vietnamese woman became the arena for debates about modernity, nationalism, and resistance under French colonial rule — and what her image tells us about who got to define "progress" in 1930s Vietnam.</p>
+      <div class="pull-quote">
+        <p>"Why was she such a <em>hot topic</em> across every publication?"</p>
+        <cite>— Julia Do, Harvard Hist. & Lit. Senior Spotlight, 2025</cite>
+      </div>
+    </div>
+    <div class="tb-divider"></div>
+    <div class="tb-text">
+      <p class="tb-body">Working across women's periodicals, beauty ads, op-eds, and girls' school records, I trace how the <em>Gái Mới</em> was simultaneously mocked by traditionalists, celebrated by reformers, and weaponized by anti-colonial writers — all at once.</p>
+      <div class="keyword-box">
+        <div class="keyword-box-title">Themes</div>
+        <div class="kw-row">
+          <span class="kw ink">Gái Mới</span>
+          <span class="kw rust">Colonial femininity</span>
+          <span class="kw sage">Vietnamese press</span>
+          <span class="kw">Visual culture</span>
+          <span class="kw">Fashion & the body</span>
+          <span class="kw">Anti-colonial resistance</span>
+        </div>
+      </div>
+      <p class="tb-body">The <em>Gái Mới</em> was not a trend. She was a political argument — her aesthetics inseparable from the shifting tides of late colonial Vietnam. This thesis is the foundation for the archive project above.</p>
+    </div>
+  </div>
+
+  <div class="sources-strip fi">
+    <div class="sc"><div class="sc-type">Press</div><div class="sc-name">Women's newspapers & periodicals</div></div>
+    <div class="sc"><div class="sc-type">Advertising</div><div class="sc-name">Beauty & fashion advertisements</div></div>
+    <div class="sc"><div class="sc-type">Illustration</div><div class="sc-name">Satirical cartoons & editorial art</div></div>
+    <div class="sc"><div class="sc-type">Institutional</div><div class="sc-name">Girls' school records & op-eds</div></div>
+  </div>
+
+  <footer>
     <div>
-      <div class="section-mono">Selected Work</div>
-      <div class="big-serif" style="margin-top:0.4rem"><em>Paintings</em> & drawings</div>
+      <div class="footer-title">A Visual History of Vietnamese Women</div>
+      <div class="footer-sub">Julia Nguyen-Phuong Do · ongoing</div>
     </div>
-    <a href="https://instagram.com/yourschewy" class="read-link read-link-dark" style="font-family:var(--mono)">↗ Instagram</a>
-  </div>
-  <div class="work-grid fi">
-    <a class="work-cell" href="#">
-      <div class="work-cell-thumb">
-        <div class="work-num">01</div>
-        <div class="work-placeholder">reclining figure, oil on linen</div>
-      </div>
-      <div class="work-cell-meta">
-        <span class="work-cell-title">she sleeps, still</span>
-        <span class="work-cell-medium">Oil · 2025</span>
-      </div>
-    </a>
-    <a class="work-cell" href="#">
-      <div class="work-cell-thumb">
-        <div class="work-num">02</div>
-        <div class="work-placeholder">figure looking away</div>
-      </div>
-      <div class="work-cell-meta">
-        <span class="work-cell-title">looking away</span>
-        <span class="work-cell-medium">Acrylic · 2025</span>
-      </div>
-    </a>
-    <a class="work-cell" href="#">
-      <div class="work-cell-thumb">
-        <div class="work-num">03</div>
-        <div class="work-placeholder" style="color:rgba(245,240,232,0.35)">graphite portrait</div>
-      </div>
-      <div class="work-cell-meta">
-        <span class="work-cell-title">study no. 12</span>
-        <span class="work-cell-medium">Graphite · 2024</span>
-      </div>
-    </a>
-    <a class="work-cell" href="#">
-      <div class="work-cell-thumb">
-        <div class="work-num">04</div>
-        <div class="work-placeholder">polka dot, from behind</div>
-      </div>
-      <div class="work-cell-meta">
-        <span class="work-cell-title">back of the head (red dots)</span>
-        <span class="work-cell-medium">Gouache · 2024</span>
-      </div>
-    </a>
-    <a class="work-cell" href="#">
-      <div class="work-cell-thumb">
-        <div class="work-num">05</div>
-        <div class="work-placeholder">sand, cigarettes</div>
-      </div>
-      <div class="work-cell-meta">
-        <span class="work-cell-title">untitled (readymade)</span>
-        <span class="work-cell-medium">Found · 2024</span>
-      </div>
-    </a>
-    <a class="work-cell" href="#">
-      <div class="work-cell-thumb">
-        <div class="work-num">06</div>
-        <div class="work-placeholder" style="color:rgba(245,240,232,0.35)">girl with red hat</div>
-      </div>
-      <div class="work-cell-meta">
-        <span class="work-cell-title">little one</span>
-        <span class="work-cell-medium">Watercolor · 2023</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- WRITING -->
-<section id="blog">
-  <div class="blog-header fi">
-    <div>
-      <div class="section-mono">Writing</div>
-      <div class="big-serif" style="margin-top:0.4rem">Essays &amp; <em>criticism</em></div>
-    </div>
-    <a href="https://theadroitjournal.org" class="read-link read-link-dark" style="font-family:var(--mono)">↗ Adroit Journal</a>
-  </div>
-  <div class="blog-row fi">
-    <div class="blog-featured">
-      <div>
-        <div class="section-mono">Featured Essay</div>
-        <div class="big-serif">On resting bodies and the gaze that makes them still</div>
-        <p class="blog-featured-excerpt">What does it mean to paint a sleeping woman, and who is watching?</p>
-      </div>
-      <div class="blog-featured-foot">
-        <span class="blog-featured-pub">The Adroit Journal · May 2025</span>
-        <a href="#" class="read-link read-link-light">Read ↗</a>
-      </div>
-    </div>
-    <div class="blog-list-col">
-      <a class="blog-entry" href="#">
-        <div class="blog-entry-meta">
-          <span class="section-mono">Criticism</span>
-          <span class="section-mono">Feb 2025</span>
-        </div>
-        <div class="blog-entry-title">Yayoi Kusama and the polka dot as compulsion</div>
-      </a>
-      <a class="blog-entry" href="#">
-        <div class="blog-entry-meta">
-          <span class="section-mono">Review</span>
-          <span class="section-mono">Nov 2024</span>
-        </div>
-        <div class="blog-entry-title">What readymades know that paintings don't</div>
-      </a>
-      <a class="blog-entry" href="https://guides.bloombergconnects.org/en-US/guide/harvardArtMuseums/tour/147bc726-be92-4434-b927-af2663dbd621/item/2800c757-057a-4146-9250-ada6986308d7">
-        <div class="blog-entry-meta">
-          <span class="section-mono">Audio Guide</span>
-          <span class="section-mono">June 2025</span>
-        </div>
-        <div class="blog-entry-title">Bloomberg Philanthropies x Harvard Art Museums: Julia Do on Francesco Fanelli's "Cupid on a Dolphin"</div>
-      </a>
-      <a class="blog-entry" href="#">
-        <div class="blog-entry-meta">
-          <span class="section-mono">Interview</span>
-          <span class="section-mono">Apr 2024</span>
-        </div>
-        <div class="blog-entry-title">In conversation: on making work that is also life</div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-left fi">
-    <div>
-      <div class="section-mono">Contact</div>
-      <div class="big-serif">let's<br><em>talk.</em></div>
-    </div>
-    <div class="contact-details">
-      <div class="contact-row">
-        <span class="contact-key">Email</span>
-        <span class="contact-val">hello@yourschewy.com</span>
-      </div>
-      <div class="contact-row">
-        <span class="contact-key">Instagram</span>
-        <span class="contact-val">@yourschewy</span>
-      </div>
-      <div class="contact-row">
-        <span class="contact-key">Based</span>
-        <span class="contact-val">CA / NYC</span>
-      </div>
-      <div class="contact-row">
-        <span class="contact-key">Open to</span>
-        <span class="contact-val">Commissions, collabs, editorial</span>
-      </div>
-    </div>
-  </div>
-  <div class="contact-right fi">
-    <div class="section-mono">Send a message</div>
-    <div class="form-bare">
-      <div class="form-row-bare">
-        <label class="flabel" for="cn">Name</label>
-        <input class="finput" id="cn" type="text" placeholder="your name">
-      </div>
-      <div class="form-row-bare">
-        <label class="flabel" for="ce">Email</label>
-        <input class="finput" id="ce" type="email" placeholder="your@email.com">
-      </div>
-      <div class="form-row-bare">
-        <label class="flabel" for="cs">What's this about</label>
-        <input class="finput" id="cs" type="text" placeholder="commission, collab, just saying hi…">
-      </div>
-      <div class="form-row-bare" style="flex:1">
-        <label class="flabel" for="cm">Message</label>
-        <textarea class="ftextarea" id="cm" rows="4" placeholder="say anything."></textarea>
-      </div>
-    </div>
-    <div class="form-submit-row">
-      <p class="form-note">I respond within a few days.</p>
-      <button class="form-submit" type="button">Send →</button>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-cell">
-    <div class="footer-mark">YOURSCHEWY</div>
-    <div class="footer-tagline">Sometimes CA, sometimes NYC.</div>
-  </div>
-  <div class="footer-cell">
     <div class="footer-links">
-      <a href="#about">About</a>
-      <a href="#portfolio">Work</a>
-      <a href="#blog">Writing</a>
-      <a href="#contact">Contact</a>
+      <a href="index.html">← yourschewy</a>
+      <a href="#contribute">Contribute</a>
+      <a href="mailto:juliaphuongdo@gmail.com">Email</a>
       <a href="https://instagram.com/yourschewy">Instagram ↗</a>
-      <a href="https://theadroitjournal.org">Adroit Journal ↗</a>
     </div>
-  </div>
-  <div class="footer-cell">
-    <div class="footer-palette">
-      <div class="palette-dot" style="background:var(--pink)"></div>
-      <div class="palette-dot" style="background:var(--sage)"></div>
-      <div class="palette-dot" style="background:var(--red)"></div>
-      <div class="palette-dot" style="background:var(--charcoal)"></div>
-    </div>
-    <div class="footer-copy">© 2025 yourschewy</div>
-  </div>
-</footer>
+  </footer>
+
+</div>
 
 <script>
 const obs = new IntersectionObserver(entries => {
   entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('in'), i * 90);
-    }
+    if (e.isIntersecting) setTimeout(() => e.target.classList.add('in'), i * 70);
   });
-}, { threshold: 0.08 });
+}, { threshold: 0.06 });
 document.querySelectorAll('.fi').forEach(el => obs.observe(el));
 </script>
 </body>
